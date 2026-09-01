@@ -1,0 +1,575 @@
+<style>
+  :root{
+    --bg: #12140F;
+    --panel: #1B1F16;
+    --panel-line: #33392A;
+    --amber: #E8A33D;
+    --sage: #7C9473;
+    --rust: #C1502E;
+    --pink: #FF3D9A;
+    --ink: #EDE6D6;
+    --ink-dim: #A6A18E;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-body: 'IBM Plex Sans', Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  .gta6-hub {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    padding: 0;
+    max-width: 100%;
+    line-height: 1.5;
+  }
+
+  .gta6-hub a { color: var(--amber); text-decoration: none; }
+  .gta6-hub a:hover { text-decoration: underline; }
+
+  /* ---------- Header / hero ---------- */
+  .hub-header {
+    padding: 40px 28px 32px;
+    border-bottom: 1px solid var(--panel-line);
+  }
+
+  .hub-kicker {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--sage);
+    margin: 0 0 14px;
+  }
+
+  .hub-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 5vw, 44px);
+    line-height: 1.08;
+    margin: 0 0 10px;
+    max-width: 14ch;
+  }
+
+  .hub-sub {
+    color: var(--ink-dim);
+    font-size: 15px;
+    max-width: 46ch;
+    margin: 0 0 28px;
+  }
+
+  .countdown {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .countdown-cell {
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-top: 2px solid var(--pink);
+    padding: 14px 18px;
+    min-width: 84px;
+    text-align: center;
+  }
+
+  .countdown-num {
+    font-family: var(--font-mono);
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--amber);
+    display: block;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .countdown-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    display: block;
+    margin-top: 4px;
+  }
+
+  .countdown-date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-top: 14px;
+  }
+
+  /* ---------- Sections generic ---------- */
+  .hub-section {
+    padding: 32px 28px;
+    border-bottom: 1px solid var(--panel-line);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .section-note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+  }
+
+  /* ---------- Price tracker ---------- */
+  .tracker-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .tracker-table th {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    font-weight: 400;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--panel-line);
+  }
+
+  .tracker-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--panel-line);
+  }
+
+  .price-cell {
+    font-family: var(--font-mono);
+    color: var(--amber);
+  }
+
+  .status-pill {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border: 1px solid var(--sage);
+    color: var(--sage);
+    display: inline-block;
+  }
+
+  .status-pill.watch {
+    border-color: var(--pink);
+    color: var(--pink);
+    box-shadow: 0 0 8px rgba(255,61,154,0.35);
+  }
+
+  /* ---------- Quiz ---------- */
+  .quiz-box {
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    padding: 24px;
+  }
+
+  .quiz-question {
+    font-family: var(--font-display);
+    font-size: 17px;
+    margin: 0 0 16px;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quiz-opt-btn {
+    background: transparent;
+    border: 1px solid var(--panel-line);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+    text-align: left;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .quiz-opt-btn:hover {
+    border-color: var(--amber);
+    background: rgba(232,163,61,0.06);
+  }
+
+  .quiz-progress {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-bottom: 14px;
+  }
+
+  .quiz-result {
+    display: none;
+  }
+
+  .quiz-result.active { display: block; }
+  .quiz-step.hidden { display: none; }
+
+  .result-pick {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--sage);
+    margin: 0 0 6px;
+  }
+
+  .result-console {
+    font-family: var(--font-display);
+    font-size: 24px;
+    margin: 0 0 10px;
+  }
+
+  .result-why {
+    color: var(--ink-dim);
+    font-size: 14px;
+    margin: 0 0 18px;
+  }
+
+  .result-cta {
+    display: inline-block;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 10px 16px;
+  }
+
+  .quiz-restart {
+    background: none;
+    border: none;
+    color: var(--ink-dim);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+    margin-top: 14px;
+    padding: 0;
+  }
+
+  /* ---------- CTA row ---------- */
+  .cta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--panel-line);
+    border: 1px solid var(--panel-line);
+  }
+
+  .cta-card {
+    background: var(--bg);
+    padding: 22px;
+  }
+
+  .cta-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--sage);
+    margin: 0 0 8px;
+  }
+
+  .cta-name {
+    font-family: var(--font-display);
+    font-size: 19px;
+    margin: 0 0 8px;
+  }
+
+  .cta-desc {
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin: 0 0 16px;
+  }
+
+  .cta-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border-bottom: 1px solid var(--amber);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- Newsletter ---------- */
+  .newsletter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    max-width: 420px;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    min-width: 180px;
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
+  .newsletter-input:focus {
+    outline: 2px solid var(--amber);
+    outline-offset: 1px;
+  }
+
+  .newsletter-btn {
+    background: var(--amber);
+    border: none;
+    color: #12140F;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 18px;
+    cursor: pointer;
+  }
+
+  .newsletter-msg {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--sage);
+    margin-top: 10px;
+    min-height: 16px;
+  }
+
+  .hub-footer {
+    padding: 20px 28px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+  }
+
+  @media (max-width: 480px) {
+    .hub-header, .hub-section, .hub-footer { padding-left: 18px; padding-right: 18px; }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<div class="gta6-hub">
+
+  <header class="hub-header">
+    <p class="hub-kicker">INDEPENDENT TRACKER — NOT AFFILIATED WITH ROCKSTAR OR TAKE-TWO</p>
+    <h1 class="hub-title">Leonida Watch</h1>
+    <p class="hub-sub">Countdown, price tracking, and a console pick — everything you need before November 19.</p>
+    <div class="countdown" id="countdownRow">
+      <div class="countdown-cell"><span class="countdown-num" id="cd-days">--</span><span class="countdown-label">DAYS</span></div>
+      <div class="countdown-cell"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-label">HRS</span></div>
+      <div class="countdown-cell"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-label">MIN</span></div>
+      <div class="countdown-cell"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-label">SEC</span></div>
+    </div>
+    <p class="countdown-date">Target: Thursday, November 19, 2026 · PS5 &amp; Xbox Series X|S</p>
+  </header>
+
+  <section class="hub-section">
+    <div class="section-head">
+      <h2 class="section-title">Price &amp; edition tracker</h2>
+      <span class="section-note">SAMPLE DATA — WIRE TO LIVE FEED</span>
+    </div>
+    <table class="tracker-table">
+      <thead>
+        <tr><th>Retailer</th><th>Edition</th><th>Price</th><th>Status</th></tr>
+      </thead>
+      <tbody id="trackerBody">
+        <!-- rows injected by JS from sample dataset -->
+      </tbody>
+    </table>
+  </section>
+
+  <section class="hub-section">
+    <div class="section-head">
+      <h2 class="section-title">PS5 or PS5 Pro?</h2>
+      <span class="section-note">3 QUESTIONS</span>
+    </div>
+    <div class="quiz-box" id="quizBox">
+
+      <div class="quiz-step" data-step="1">
+        <p class="quiz-progress">STEP 1 / 3</p>
+        <p class="quiz-question">What are you playing on right now?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt-btn" data-q="1" data-val="4k">A 4K TV</button>
+          <button class="quiz-opt-btn" data-q="1" data-val="1080">A 1080p/1440p monitor or older TV</button>
+          <button class="quiz-opt-btn" data-q="1" data-val="unsure">Not sure yet</button>
+        </div>
+      </div>
+
+      <div class="quiz-step hidden" data-step="2">
+        <p class="quiz-progress">STEP 2 / 3</p>
+        <p class="quiz-question">What matters more to you in an open world this size?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt-btn" data-q="2" data-val="fidelity">Visual fidelity and draw distance</button>
+          <button class="quiz-opt-btn" data-q="2" data-val="framerate">Smooth, high frame rate</button>
+          <button class="quiz-opt-btn" data-q="2" data-val="either">Honestly, either is fine</button>
+        </div>
+      </div>
+
+      <div class="quiz-step hidden" data-step="3">
+        <p class="quiz-progress">STEP 3 / 3</p>
+        <p class="quiz-question">Budget for the console itself?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt-btn" data-q="3" data-val="tight">Keeping it close to standard PS5 pricing</button>
+          <button class="quiz-opt-btn" data-q="3" data-val="flex">Willing to stretch for the best version</button>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <p class="result-pick">RECOMMENDATION</p>
+        <h3 class="result-console" id="resultConsole">—</h3>
+        <p class="result-why" id="resultWhy">—</p>
+        <a class="result-cta" href="#" id="resultLink">CHECK CURRENT PRICE →</a>
+        <br>
+        <button class="quiz-restart" id="quizRestart">start over</button>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="hub-section">
+    <div class="section-head">
+      <h2 class="section-title">Follow the tracker</h2>
+    </div>
+    <div class="cta-grid">
+      <div class="cta-card">
+        <p class="cta-eyebrow">DAILY UPDATES</p>
+        <h3 class="cta-name">X / Twitter</h3>
+        <p class="cta-desc">Price drops, confirmed news, and countdown milestones as they happen.</p>
+        <a class="cta-link" href="https://x.com/GTA6ixCentral" id="twitterLink" target="_blank" rel="noopener">@GTA6ixCentral →</a>
+      </div>
+      <div class="cta-card">
+        <p class="cta-eyebrow">LAUNCH-WEEK COORDINATION</p>
+        <h3 class="cta-name">Discord</h3>
+        <p class="cta-desc">Find a squad, compare regional prices, swap day-one plans.</p>
+        <a class="cta-link" href="https://discord.gg/WkgNeB3pNW" id="discordLink" target="_blank" rel="noopener">Join the server →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="hub-section" style="border-bottom:none;">
+    <div class="section-head">
+      <h2 class="section-title">Weekly digest</h2>
+      <span class="section-note">NO SPAM, UNSUBSCRIBE ANYTIME</span>
+    </div>
+    <p style="color:var(--ink-dim); font-size:14px; max-width:46ch; margin:0 0 16px;">
+      One email a week: what's confirmed, what changed, and any price movement worth knowing about.
+    </p>
+    <div class="newsletter-row">
+      <input class="newsletter-input" type="email" id="newsletterEmail" placeholder="you@email.com">
+      <button class="newsletter-btn" id="newsletterBtn">SUBSCRIBE</button>
+    </div>
+    <p class="newsletter-msg" id="newsletterMsg"></p>
+  </section>
+
+  <footer class="hub-footer">
+    Leonida Watch is an independent fan-run tracker. Not affiliated with, endorsed by, or sponsored by Rockstar Games or Take-Two Interactive. All trademarks belong to their respective owners.
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  // ---------- Countdown ----------
+  var target = new Date("2026-11-19T00:00:00-05:00").getTime();
+  function tick() {
+    var now = new Date().getTime();
+    var diff = Math.max(0, target - now);
+    var d = Math.floor(diff / (1000*60*60*24));
+    var h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    var m = Math.floor((diff % (1000*60*60)) / (1000*60));
+    var s = Math.floor((diff % (1000*60)) / 1000);
+    document.getElementById('cd-days').textContent = d;
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ---------- Price tracker (sample dataset — replace with live feed) ----------
+  var sampleData = [
+    { retailer: "Retailer A", edition: "Standard Edition", price: "$79.99", status: "steady" },
+    { retailer: "Retailer A", edition: "Ultimate Edition", price: "$99.99", status: "steady" },
+    { retailer: "Retailer B", edition: "Standard Edition", price: "$79.99", status: "steady" },
+    { retailer: "Retailer C", edition: "Ultimate Edition", price: "$94.99", status: "watch" },
+  ];
+  var tbody = document.getElementById('trackerBody');
+  sampleData.forEach(function(row) {
+    var tr = document.createElement('tr');
+    var pillClass = row.status === 'watch' ? 'status-pill watch' : 'status-pill';
+    var pillText = row.status === 'watch' ? 'PRICE DROP' : 'STEADY';
+    tr.innerHTML =
+      '<td>' + row.retailer + '</td>' +
+      '<td>' + row.edition + '</td>' +
+      '<td class="price-cell">' + row.price + '</td>' +
+      '<td><span class="' + pillClass + '">' + pillText + '</span></td>';
+    tbody.appendChild(tr);
+  });
+
+  // ---------- Quiz ----------
+  var answers = {};
+  var steps = document.querySelectorAll('.quiz-step');
+  var resultBox = document.getElementById('quizResult');
+
+  document.getElementById('quizBox').addEventListener('click', function(e) {
+    if (!e.target.classList.contains('quiz-opt-btn')) return;
+    var q = e.target.getAttribute('data-q');
+    var val = e.target.getAttribute('data-val');
+    answers[q] = val;
+
+    var currentStep = e.target.closest('.quiz-step');
+    var stepNum = parseInt(currentStep.getAttribute('data-step'), 10);
+    currentStep.classList.add('hidden');
+
+    var next = document.querySelector('.quiz-step[data-step="' + (stepNum + 1) + '"]');
+    if (next) {
+      next.classList.remove('hidden');
+    } else {
+      showResult();
+    }
+  });
+
+  function showResult() {
+    var score = 0;
+    if (answers['1'] === '4k') score += 2;
+    if (answers['1'] === 'unsure') score += 1;
+    if (answers['2'] === 'fidelity') score += 2;
+    if (answers['2'] === 'either') score += 1;
+    if (answers['3'] === 'flex') score += 2;
+
+    var pro = score >= 4;
+    document.getElementById('resultConsole').textContent = pro ? 'PS5 Pro' : 'PS5 (standard)';
+    document.getElementById('resultWhy').textContent = pro
+      ? 'Your setup and priorities point toward the extra fidelity and headroom — worth the jump for a world this size.'
+      : 'The standard PS5 covers what you actually need here — save the difference and put it toward the game itself.';
+    resultBox.classList.add('active');
+  }
+
+  document.getElementById('quizRestart').addEventListener('click', function() {
+    answers = {};
+    resultBox.classList.remove('active');
+    steps.forEach(function(s) {
+      s.classList.toggle('hidden', s.getAttribute('data-step') !== '1');
+    });
+  });
+
+  // ---------- Newsletter (UI only — wire to real ESP) ----------
+  document.getElementById('newsletterBtn').addEventListener('click', function() {
+    var val = document.getElementById('newsletterEmail').value.trim();
+    var msg = document.getElementById('newsletterMsg');
+    if (!val || val.indexOf('@') === -1) {
+      msg.textContent = 'Enter a valid email.';
+      msg.style.color = '#FF3D9A';
+      return;
+    }
+    msg.textContent = 'Saved locally for this demo — connect an email service to go live.';
+    msg.style.color = '#7C9473';
+  });
+})();
+</script>
