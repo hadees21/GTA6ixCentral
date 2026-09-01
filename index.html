@@ -1,14 +1,14 @@
 <style>
   :root{
-    --bg: #12140F;
-    --panel: #1B1F16;
-    --panel-line: #33392A;
-    --amber: #E8A33D;
-    --sage: #7C9473;
-    --rust: #C1502E;
-    --pink: #FF3D9A;
-    --ink: #EDE6D6;
-    --ink-dim: #A6A18E;
+    --bg: #0B0420;
+    --panel: #16093A;
+    --panel-line: #3B1F6E;
+    --amber: #00E5D0;
+    --sage: #9B6BFF;
+    --rust: #FF6B35;
+    --pink: #FF2E97;
+    --ink: #F6EDFF;
+    --ink-dim: #A98FD6;
     --font-display: 'Fraunces', Georgia, serif;
     --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
     --font-body: 'IBM Plex Sans', Arial, sans-serif;
@@ -32,6 +32,10 @@
   .hub-header {
     padding: 40px 28px 32px;
     border-bottom: 1px solid var(--panel-line);
+    background:
+      radial-gradient(120% 80% at 15% 0%, rgba(255,46,151,0.28) 0%, rgba(255,46,151,0) 60%),
+      radial-gradient(110% 90% at 90% 10%, rgba(0,229,208,0.20) 0%, rgba(0,229,208,0) 55%),
+      linear-gradient(180deg, #1A0838 0%, var(--bg) 100%);
   }
 
   .hub-kicker {
@@ -48,7 +52,11 @@
     font-size: clamp(28px, 5vw, 44px);
     line-height: 1.08;
     margin: 0 0 10px;
-    max-width: 14ch;
+    max-width: 16ch;
+    background: linear-gradient(92deg, #FF2E97 0%, #FF6B35 45%, #00E5D0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .hub-sub {
@@ -68,12 +76,14 @@
     background: var(--panel);
     border: 1px solid var(--panel-line);
     border-top: 2px solid var(--pink);
+    box-shadow: 0 -1px 12px rgba(255,46,151,0.35), inset 0 0 24px rgba(155,107,255,0.10);
     padding: 14px 18px;
     min-width: 84px;
     text-align: center;
   }
 
   .countdown-num {
+    text-shadow: 0 0 14px rgba(0,229,208,0.55);
     font-family: var(--font-mono);
     font-size: 30px;
     font-weight: 600;
@@ -164,7 +174,7 @@
   .status-pill.watch {
     border-color: var(--pink);
     color: var(--pink);
-    box-shadow: 0 0 8px rgba(255,61,154,0.35);
+    box-shadow: 0 0 10px rgba(255,46,151,0.55);
   }
 
   /* ---------- Quiz ---------- */
@@ -200,7 +210,7 @@
 
   .quiz-opt-btn:hover {
     border-color: var(--amber);
-    background: rgba(232,163,61,0.06);
+    background: rgba(0,229,208,0.08);
   }
 
   .quiz-progress {
@@ -321,9 +331,9 @@
   }
 
   .newsletter-btn {
-    background: var(--amber);
+    background: linear-gradient(100deg, #FF2E97 0%, #FF6B35 100%);
     border: none;
-    color: #12140F;
+    color: #0B0420;
     font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 600;
@@ -340,6 +350,7 @@
   }
 
   .hub-footer {
+    border-top: 1px solid var(--panel-line);
     padding: 20px 28px;
     font-family: var(--font-mono);
     font-size: 11px;
@@ -358,7 +369,7 @@
 
   <header class="hub-header">
     <p class="hub-kicker">INDEPENDENT TRACKER — NOT AFFILIATED WITH ROCKSTAR OR TAKE-TWO</p>
-    <h1 class="hub-title">Leonida Watch</h1>
+    <h1 class="hub-title">GTA6ix Central</h1>
     <p class="hub-sub">Countdown, price tracking, and a console pick — everything you need before November 19.</p>
     <div class="countdown" id="countdownRow">
       <div class="countdown-cell"><span class="countdown-num" id="cd-days">--</span><span class="countdown-label">DAYS</span></div>
@@ -468,7 +479,7 @@
   </section>
 
   <footer class="hub-footer">
-    Leonida Watch is an independent fan-run tracker. Not affiliated with, endorsed by, or sponsored by Rockstar Games or Take-Two Interactive. All trademarks belong to their respective owners.
+    GTA6ix Central is an independent fan-run tracker. Not affiliated with, endorsed by, or sponsored by Rockstar Games or Take-Two Interactive. All trademarks belong to their respective owners.
   </footer>
 
 </div>
@@ -565,11 +576,11 @@
     var msg = document.getElementById('newsletterMsg');
     if (!val || val.indexOf('@') === -1) {
       msg.textContent = 'Enter a valid email.';
-      msg.style.color = '#FF3D9A';
+      msg.style.color = '#FF2E97';
       return;
     }
     msg.textContent = 'Saved locally for this demo — connect an email service to go live.';
-    msg.style.color = '#7C9473';
+    msg.style.color = '#00E5D0';
   });
 })();
 </script>
